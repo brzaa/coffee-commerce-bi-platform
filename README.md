@@ -6,14 +6,7 @@ End-to-end Business Intelligence demo platform for a coffee-commerce company. Th
 
 ## Live Dashboard
 
-Hosted Metabase dashboard: [Coffee Commerce BI Executive Dashboard](http://194.233.82.4:8080/dashboard/2-coffee-commerce-bi-executive-dashboard)
-
-If Metabase prompts for sign-in, use the demo credentials from `.env.example`:
-
-```text
-MB_ADMIN_EMAIL=demo@coffee-bi.local
-MB_ADMIN_PASSWORD=change_me_metabase
-```
+Hosted Metabase dashboard: [Coffee Commerce BI Executive Dashboard]([http://194.233.82.4:8080/dashboard/2-coffee-commerce-bi-executive-dashboard](http://194.233.82.4:8080/public/dashboard/00c90e73-c2c0-4828-9220-6bd725d6c000))
 
 ## Why This Project Exists
 
