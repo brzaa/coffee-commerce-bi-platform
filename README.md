@@ -6,7 +6,7 @@ End-to-end Business Intelligence demo platform for a coffee-commerce company. Th
 
 ## Live Dashboard
 
-Hosted Metabase dashboard: [Coffee Commerce BI Executive Dashboard]([http://194.233.82.4:8080/public/dashboard/00c90e73-c2c0-4828-9220-6bd725d6c000])
+Hosted Metabase dashboard: [Coffee Commerce BI Executive Dashboard](http://194.233.82.4:8080/public/dashboard/00c90e73-c2c0-4828-9220-6bd725d6c000)
 
 ## Why This Project Exists
 
