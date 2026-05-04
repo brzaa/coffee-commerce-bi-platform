@@ -8,17 +8,33 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+      VPS_APP_DIR: ${{ secrets.VPS_APP_DIR }}
     steps:
+      - name: Check deployment configuration
+        id: deploy-config
+        run: |
+          if [ -n "$VPS_HOST" ] && [ -n "$VPS_USER" ] && [ -n "$VPS_SSH_KEY" ] && [ -n "$VPS_APP_DIR" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Skipping VPS deploy because one or more required secrets are missing: VPS_HOST, VPS_USER, VPS_SSH_KEY, VPS_APP_DIR."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Deploy over SSH
+        if: steps.deploy-config.outputs.configured == 'true'
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          host: ${{ env.VPS_HOST }}
+          username: ${{ env.VPS_USER }}
+          key: ${{ env.VPS_SSH_KEY }}
           script_stop: true
           script: |
             set -e
-            APP_DIR="${{ secrets.VPS_APP_DIR }}"
+            APP_DIR="${{ env.VPS_APP_DIR }}"
             REPO_URL="https://github.com/${{ github.repository }}.git"
 
             if [ -z "$APP_DIR" ]; then
