@@ -1,0 +1,13 @@
+coffee_commerce_bi:
+  target: "{{ env_var('DBT_TARGET', 'dev') }}"
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DB_HOST', 'warehouse') }}"
+      port: "{{ env_var('DB_PORT', '5432') | int }}"
+      user: "{{ env_var('DB_USER', 'coffee_bi') }}"
+      password: "{{ env_var('DB_PASSWORD', 'change_me_locally') }}"
+      dbname: "{{ env_var('DB_NAME', 'coffee_warehouse') }}"
+      schema: analytics
+      threads: 4
+      connect_timeout: 10

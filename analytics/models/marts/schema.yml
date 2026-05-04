@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: Completed and non-completed ecommerce orders with revenue, discount, margin, and acquisition fields.
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['completed', 'processing', 'cancelled', 'refunded']
+      - name: net_revenue
+        tests: [not_null]
+
+  - name: dim_customers
+    description: Customer dimension with acquisition channel, geography, lifecycle segment, and lifetime value.
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['prospect', 'new_buyer', 'repeat', 'loyalist']
+
+  - name: dim_products
+    description: Product dimension with normalized category and margin attributes.
+    columns:
+      - name: product_id
+        tests: [not_null, unique]
+      - name: category
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['beans', 'brewing_gear', 'machine', 'grinder', 'accessory', 'subscription']
+
+  - name: fct_daily_kpis
+    description: Daily KPI table for executive reporting and Metabase dashboard cards.
+    columns:
+      - name: metric_date
+        tests: [not_null, unique]
+
+  - name: mart_product_performance
+    description: Product sales and browsing performance for merchandising analysis.
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: mart_customer_cohorts
+    description: Monthly customer retention cohort metrics.
+    columns:
+      - name: cohort_month
+        tests: [not_null]
+      - name: months_since_first_purchase
+        tests: [not_null]
+
+  - name: mart_inventory_risk
+    description: Latest product inventory status with days-of-cover and reorder risk.
+    columns:
+      - name: product_id
+        tests: [not_null, unique]
+      - name: inventory_risk_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['healthy', 'watchlist', 'reorder_now']
+
+  - name: mart_marketing_roi
+    description: Daily channel spend matched to revenue and acquisition efficiency.
+    columns:
+      - name: spend_date
+        tests: [not_null]
+      - name: channel
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['email', 'paid_search', 'paid_social', 'marketplace', 'referral']

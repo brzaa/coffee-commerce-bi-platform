@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="Coffee Commerce BI dashboard preview">
+  <rect width="1200" height="720" fill="#f7f4ef"/>
+  <rect x="40" y="34" width="1120" height="76" rx="8" fill="#1f2933"/>
+  <text x="72" y="82" fill="#ffffff" font-family="Arial, sans-serif" font-size="28" font-weight="700">Coffee Commerce BI Platform</text>
+  <text x="824" y="82" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">GMV, Retention, Inventory, Marketing ROI</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="40" y="138" width="256" height="128" rx="8" fill="#ffffff" stroke="#d8d0c4"/>
+    <text x="64" y="174" font-size="15" fill="#64748b">Net Revenue</text>
+    <text x="64" y="220" font-size="34" font-weight="700" fill="#111827">IDR 2.84B</text>
+    <text x="64" y="244" font-size="14" fill="#15803d">+18.4% vs prior period</text>
+    <rect x="320" y="138" width="256" height="128" rx="8" fill="#ffffff" stroke="#d8d0c4"/>
+    <text x="344" y="174" font-size="15" fill="#64748b">Completed Orders</text>
+    <text x="344" y="220" font-size="34" font-weight="700" fill="#111827">3,216</text>
+    <text x="344" y="244" font-size="14" fill="#15803d">AOV IDR 883K</text>
+    <rect x="600" y="138" width="256" height="128" rx="8" fill="#ffffff" stroke="#d8d0c4"/>
+    <text x="624" y="174" font-size="15" fill="#64748b">Conversion Rate</text>
+    <text x="624" y="220" font-size="34" font-weight="700" fill="#111827">4.7%</text>
+    <text x="624" y="244" font-size="14" fill="#b45309">Session to order</text>
+    <rect x="880" y="138" width="280" height="128" rx="8" fill="#ffffff" stroke="#d8d0c4"/>
+    <text x="904" y="174" font-size="15" fill="#64748b">Stockout Risk SKUs</text>
+    <text x="904" y="220" font-size="34" font-weight="700" fill="#111827">7</text>
+    <text x="904" y="244" font-size="14" fill="#b91c1c">Requires reorder review</text>
+
+    <rect x="40" y="294" width="720" height="360" rx="8" fill="#ffffff" stroke="#d8d0c4"/>
+    <text x="64" y="334" font-size="18" font-weight="700" fill="#111827">Daily Revenue and Orders</text>
+    <polyline fill="none" stroke="#0f766e" stroke-width="5" points="82,586 150,548 218,560 286,510 354,526 422,470 490,486 558,416 626,440 694,354"/>
+    <polyline fill="none" stroke="#b45309" stroke-width="5" points="82,604 150,580 218,588 286,552 354,560 422,518 490,536 558,492 626,506 694,454"/>
+    <line x1="82" y1="604" x2="710" y2="604" stroke="#cbd5e1"/>
+    <line x1="82" y1="370" x2="82" y2="604" stroke="#cbd5e1"/>
+
+    <rect x="792" y="294" width="368" height="360" rx="8" fill="#ffffff" stroke="#d8d0c4"/>
+    <text x="816" y="334" font-size="18" font-weight="700" fill="#111827">Top Product Categories</text>
+    <rect x="816" y="376" width="278" height="30" rx="4" fill="#0f766e"/>
+    <rect x="816" y="424" width="232" height="30" rx="4" fill="#2563eb"/>
+    <rect x="816" y="472" width="188" height="30" rx="4" fill="#b45309"/>
+    <rect x="816" y="520" width="142" height="30" rx="4" fill="#7c3aed"/>
+    <rect x="816" y="568" width="112" height="30" rx="4" fill="#64748b"/>
+    <text x="816" y="628" font-size="13" fill="#64748b">Preview asset. Live cards are generated in Metabase from dbt marts.</text>
+  </g>
+</svg>

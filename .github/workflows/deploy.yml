@@ -1,0 +1,47 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+            APP_DIR="${{ secrets.VPS_APP_DIR }}"
+            REPO_URL="https://github.com/${{ github.repository }}.git"
+
+            if [ -z "$APP_DIR" ]; then
+              echo "VPS_APP_DIR secret is required"
+              exit 1
+            fi
+
+            mkdir -p "$APP_DIR"
+            if [ ! -d "$APP_DIR/.git" ]; then
+              rm -rf "$APP_DIR"
+              git clone "$REPO_URL" "$APP_DIR"
+            else
+              git -C "$APP_DIR" fetch origin main
+              git -C "$APP_DIR" reset --hard origin/main
+            fi
+
+            cd "$APP_DIR"
+            if [ ! -f .env ]; then
+              cp .env.example .env
+              echo "Created .env from .env.example. Update passwords on the VPS."
+            fi
+
+            docker compose up -d --build warehouse metabase nginx
+            docker compose --profile pipeline run --rm pipeline
+            docker compose --profile setup run --rm metabase-setup || true
+            docker compose ps

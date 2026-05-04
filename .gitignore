@@ -1,0 +1,18 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Generated data and local warehouse state
+data/generated/
+logs/
+target/
+dbt_packages/
+analytics/target/
+analytics/dbt_packages/
+analytics/.user.yml
+
+# Docker/Metabase local state
+metabase-data/
+postgres-data/

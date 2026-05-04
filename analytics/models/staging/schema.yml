@@ -1,0 +1,110 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: Synthetic coffee-commerce operational data loaded by the Prefect pipeline.
+    tables:
+      - name: customers
+      - name: products
+      - name: orders
+      - name: order_items
+      - name: inventory_snapshots
+      - name: marketing_spend
+      - name: web_events
+
+models:
+  - name: stg_customers
+    description: Clean customer acquisition and profile attributes.
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: acquisition_channel
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['direct', 'email', 'paid_search', 'paid_social', 'marketplace', 'referral']
+
+  - name: stg_products
+    description: Coffee-commerce product catalog with list price and product cost.
+    columns:
+      - name: product_id
+        tests: [not_null, unique]
+      - name: category
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['beans', 'brewing_gear', 'machine', 'grinder', 'accessory', 'subscription']
+
+  - name: stg_orders
+    description: Order header events from the commerce system.
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['completed', 'processing', 'cancelled', 'refunded']
+
+  - name: stg_order_items
+    description: Order line items with unit price and discounts.
+    columns:
+      - name: order_item_id
+        tests: [not_null, unique]
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+
+  - name: stg_inventory_snapshots
+    description: Daily inventory snapshots by product.
+    columns:
+      - name: snapshot_id
+        tests: [not_null, unique]
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+
+  - name: stg_marketing_spend
+    description: Daily marketing spend by campaign and channel.
+    columns:
+      - name: spend_id
+        tests: [not_null, unique]
+      - name: channel
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['email', 'paid_search', 'paid_social', 'marketplace', 'referral']
+
+  - name: stg_web_events
+    description: Web behavior events used for funnel and conversion metrics.
+    columns:
+      - name: event_id
+        tests: [not_null, unique]
+      - name: event_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['page_view', 'product_view', 'add_to_cart', 'checkout_started', 'purchase']
